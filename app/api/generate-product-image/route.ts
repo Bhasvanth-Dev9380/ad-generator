@@ -15,61 +15,25 @@ import { NextRequest, NextResponse } from "next/server";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
-const PROMPT = `
-Create a high-quality creative featuring the uploaded product image as the main subject. 
-Allow full flexibility—this creative may be a product showcase, marketing banner, 3D-style render, 
-ecommerce listing image, premium ad visual, or AI SaaS-style creative depending on what fits best.
+// PROMPT is a constant string defining the prompt for generating a product showcase image.
+const PROMPT = `Create a vibrant product showcase image featuring a uploaded image
+in the center, surrounded by dynamic splashes of liquid or relevant material that complement the product.
+ Use a clean, colorful background to make the product stand out. Include subtle elements related to the product's flavor,
+  ingredients, or theme floating around to add context and visual interest. 
+  Ensure the product is sharp and in focus, with motion and energy conveyed through the splash effects ,
+ Also give me image to video prompt for same in JSON format: {textToImage:'',imageToVideo:''}. Do not add any raw text or comment, Just give Json
+`
 
-Place the product clearly in focus. You may use any of the following creative styles based on the product:
-- Modern ecommerce product display
-- Vibrant liquid splash / motion energy effects
-- Minimalistic premium brand layout
-- 3D glossy cinematic product render
-- Abstract futuristic AI-themed backdrop
-- Tech-style UI/UX elements (for AI/SaaS product branding)
-- Clean gradient or soft shadow background
-- Composition with floating ingredients, icons, or material elements
-
-You can add subtle environmental elements, textures, particles, or lighting to amplify visual appeal.
-Ensure the final composition is sharp, well-lit, and polished with strong visual hierarchy.
-
-Also return an "image to video" animation prompt to animate this same creative (movement, energy, environment, or 3D reveal).
-
-Return STRICT JSON ONLY in the following format:
-{
-  "textToImage": "",
-  "imageToVideo": ""
-}
-Do not add any other text or comments.
-`;
-
-
-const AVATAR_PROMPT = `
-Create a high-quality creative featuring the uploaded avatar interacting naturally with the uploaded product image. 
-The avatar may hold, display, showcase, use, or present the product in a natural, realistic, or modern AI-styled scenario.
-
-Allow flexible creative interpretations, such as:
-- Professional ecommerce model photo
-- Lifestyle scene showcasing the product
-- Minimalistic clean background ad creative
-- Cinematic or stylized portrait with product in hand
-- AI SaaS-themed layout (for branding / influencer + product ads)
-- Futuristic tech wallpaper or holographic product display
-- Vibrant splash / energetic composition around both avatar & product
-- Floating icons, UI elements, or thematic materials based on the product
-
-Ensure the avatar remains natural, well-lit, sharp, and blended realistically with the product. 
-Maintain clear focus on the product while preserving a professional and polished look.
-
-Also provide an "image to video" animation prompt suitable for animating the same concept (motion, 3D parallax, liquid/spark effects, light motion, camera sway, or dynamic avatar+product movement).
-
-Return STRICT JSON ONLY in the following format:
-{
-  "textToImage": "",
-  "imageToVideo": ""
-}
-Do not add any other text or comments.
-`;
+// AVATAR_PROMPT is a constant string defining the prompt for generating a product showcase image with an avatar.
+const AVATAR_PROMPT = `Create a professional product showcase image 
+featuring the uploaded avatar naturally holding
+ the uploaded product image in their hands. Make 
+ the product the clear focal point of the scene. 
+ Use a clean, colorful background that highlights the product.
+  Include subtle floating elements related to the product’s flavor, 
+  ingredients, or theme for added context, if relevant. Ensure both the avatar and product are sharp, well-lit, and in focus, 
+conveying a polished and professional look.Also give me image to video prompt for same 
+   in JSON format: {textToImage:'',imageToVideo:''} Do not add any raw text or comment, Just give Json`
 
 
 // --- robust URL -> inlineData
